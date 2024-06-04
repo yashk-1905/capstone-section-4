@@ -8,7 +8,6 @@ import {BrowserRouter} from 'react-router-dom'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/*  in order to use react router dom in our application we need to wrap our entire app within a react router component  */}
     <BrowserRouter>
       <App />
     </BrowserRouter>

@@ -1,22 +1,8 @@
-//vid 86 React Router Link 
+//vid 87 style our navigation 
 
-/**first i will need to move this navigation component into a different route */
 import Home from "./routes/home/home.component";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.component";
-
-// const Navigation = () => {
-//   return(
-//     <div>
-//       <div>
-//         <h1>
-//           I am the Navigation bar 
-//         </h1>
-//       </div>     
-//         <Outlet></Outlet>
-//     </div>
-//   )
-// }
 
 const Shop = () =>  {
   return(
