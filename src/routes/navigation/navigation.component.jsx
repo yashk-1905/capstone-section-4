@@ -11,12 +11,14 @@ const Navigation = () => {
       <>
         <div className="navigation">
           <Link className="logo-container" to='/'>
-            {/* <div>Logo</div> */}
             <CrwnLogo className="logo"></CrwnLogo>
           </Link>
-          <div className="links-container">
+          <div className="nav-links-container">
             <Link className="nav-link" to= '/shop'> 
               SHOP
+            </Link>
+            <Link className='nav-link' to = '/signIn'>
+              SIGN IN
             </Link>
           </div>
         </div>     
