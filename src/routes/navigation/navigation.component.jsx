@@ -1,11 +1,18 @@
-//over here we are going to import the crown svg as component of react
-
+import { useContext } from 'react';
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
-// we are also now gonna import the style files 
 import './navigation-scss/navigation.style.css'
 
 import { Link, Outlet } from "react-router-dom";
+import { SignInContext } from '../../contexts/user.context';
+import { signOutUser } from '../../utils/firebase/firebase.utils';
+import CartIcon from '../../components/cart-icon/cart-icon.component';
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
+import { CartDropdownContext } from '../../contexts/cart-dropdown.context';
 const Navigation = () => {
+    const {currentUser} = useContext(SignInContext);
+    console.log(currentUser);
+    const {isCartOpen} = useContext(CartDropdownContext);
+
     return(
       <>
         <div className="navigation">
@@ -16,14 +23,28 @@ const Navigation = () => {
             <Link className="nav-link" to= '/shop'> 
               SHOP
             </Link>
-            <Link className='nav-link' to = '/auth'>
-              SIGN IN
-            </Link>
+            {
+              currentUser ? (
+                <span 
+                  className='nav-link' 
+                  onClick={signOutUser}
+                  >
+                  SIGN OUT
+                </span>
+              ) :(  
+                <Link className='nav-link' to = '/auth'>
+                  SIGN IN
+                </Link>
+              )
+            }
+              <CartIcon></CartIcon>
           </div>
+            {
+              isCartOpen && <CartDropdown></CartDropdown>
+            }          
         </div>     
           <Outlet></Outlet>
       </>
-      // </div>
     )
   }
 

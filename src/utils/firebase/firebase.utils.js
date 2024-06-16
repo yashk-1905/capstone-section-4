@@ -5,7 +5,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut,
+  // firebase provides us with these observable listners which is a way for us to hook into a stream of events like signIn or signOut events and based on these changes we are able to trigger something 
+  onAuthStateChanged
 } from "firebase/auth";
 import {
   getFirestore,  
@@ -13,6 +16,7 @@ import {
   getDoc,
   setDoc
 } from "firebase/firestore";
+import { useCallback } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbzRzQGPGZqt2cuMPvu4lvKuwfJGowt74",
@@ -65,6 +69,14 @@ export const createAuthUserWithEmailAndPassword = async (email,password) => {
 
 export const signInUserWithEmailAndPassword = async (email,password) => {
   if(!email || !password) return;
-  // return await createUserWithEmailAndPassword(auth, email, password);
   return await signInWithEmailAndPassword(auth, email, password);
 }
+
+export const signOutUser  = async () => {
+  await signOut(auth); 
+}
+
+// onAuthStateChanged takes in two parameters first one is gonna be the auth that's gonna keep track of the signIn and signOut events, and second one will be a callback that's gonna trigger everytime this auth state changes 
+export const onAuthStateChangedListner = (callback) => onAuthStateChanged(auth, callback)
+
+//now we are gonna use onAuthStateChangedListner in our context as the majority of the code that has to do with fetching and keeping track of what the user value is should probably be kept in a place where we are also storing it 
