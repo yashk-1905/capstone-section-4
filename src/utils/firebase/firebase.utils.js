@@ -7,16 +7,19 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  // firebase provides us with these observable listners which is a way for us to hook into a stream of events like signIn or signOut events and based on these changes we are able to trigger something 
   onAuthStateChanged
 } from "firebase/auth";
 import {
   getFirestore,  
   doc,  
   getDoc,
-  setDoc
+  setDoc,
+  collection,
+  writeBatch,
+  // we need to use these functions of firestore in order to get data from our categories collection inside the shop page
+  query, 
+  getDocs
 } from "firebase/firestore";
-import { useCallback } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbzRzQGPGZqt2cuMPvu4lvKuwfJGowt74",
@@ -36,6 +39,49 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth,googleProvider);
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+  await batch.commit();
+  console.log('done');
+}
+
+//now we need to get the data from our database collection categories from inside of firestore database 
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  // for generating query on the collectionRef
+  const q = query(collectionRef);
+
+  // now this q is gonna get some object that i am gonna store inside the snapshot using the getDocs method as we just imported from the firestore 
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) =>{
+    /**
+     * docs that we get are like these 
+     * hats: {
+     *  title: 'Hats',
+     *  items: [
+     *    {},
+     *    {}
+     *  ]
+     * }
+     */
+    const {title,items} = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc
+  },{});
+
+  return categoryMap;
+}
+
+//now let's go to product context to use this data 
+
+
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return;
 
@@ -76,7 +122,4 @@ export const signOutUser  = async () => {
   await signOut(auth); 
 }
 
-// onAuthStateChanged takes in two parameters first one is gonna be the auth that's gonna keep track of the signIn and signOut events, and second one will be a callback that's gonna trigger everytime this auth state changes 
 export const onAuthStateChangedListner = (callback) => onAuthStateChanged(auth, callback)
-
-//now we are gonna use onAuthStateChangedListner in our context as the majority of the code that has to do with fetching and keeping track of what the user value is should probably be kept in a place where we are also storing it 

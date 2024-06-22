@@ -1,22 +1,39 @@
 import { useContext } from "react";
-import { ProductsContext } from "../../contexts/product.context";
 import ProductCard from "../product-card/product-card.component";
 import './shop-component-scss/shop-component.styles.css'
+import { CategoriesContext } from "../../contexts/categories.context";
+import { useNavigate } from "react-router-dom";
+import AllProducts from "../all-products/all-products.component";
 
 const Shop = () => {
-    const {products} = useContext(ProductsContext);
+    const {categoriesMap, setUrlTitle} = useContext(CategoriesContext);
+
+    const navigate  = useNavigate();
+    const goToTitleProducts = (title) => {
+        navigate(`/products/${title}`);
+        setUrlTitle(title);
+    }
     return(
-        <div className="products-container">
+        <>
             {
-                // products.map(({id,name}) => 
-                products.map((product) => 
-                    // <div key={id}>
-                    //     <h1>{name}</h1>
-                    // </div>
-                    <ProductCard key={product.id} product={product}></ProductCard>
-                )
+                Object.keys(categoriesMap).map((title, index) => {
+                    return <>
+                        <h2 onClick={() => goToTitleProducts(title)} style={{cursor:"pointer", textTransform: "capitalize"}}>{title}</h2>
+                        <div className="products-container">
+                            { 
+                                //limiting the number of items i get from the map to 4 
+                                categoriesMap[title].map((product,index) =>{
+                                    if(index<4){
+                                       return <ProductCard key={product.id} product={product}></ProductCard>
+                                    }
+                                } 
+                                )
+                            }
+                        </div>
+                    </>
+                } )
             }
-        </div>
+        </>
     )
 }
 
