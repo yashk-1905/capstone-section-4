@@ -1,3 +1,5 @@
+// vid 141 last  touches to the app changing the home route
+
 import Home from "./routes/home/home.component";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.component";
