@@ -16,7 +16,6 @@ import {
   setDoc,
   collection,
   writeBatch,
-  // we need to use these functions of firestore in order to get data from our categories collection inside the shop page
   query, 
   getDocs
 } from "firebase/firestore";
@@ -52,25 +51,11 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
   console.log('done');
 }
 
-//now we need to get the data from our database collection categories from inside of firestore database 
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
-  // for generating query on the collectionRef
   const q = query(collectionRef);
-
-  // now this q is gonna get some object that i am gonna store inside the snapshot using the getDocs method as we just imported from the firestore 
   const querySnapshot = await getDocs(q);
   const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) =>{
-    /**
-     * docs that we get are like these 
-     * hats: {
-     *  title: 'Hats',
-     *  items: [
-     *    {},
-     *    {}
-     *  ]
-     * }
-     */
     const {title,items} = docSnapshot.data();
     acc[title.toLowerCase()] = items;
     return acc
@@ -78,9 +63,6 @@ export const getCategoriesAndDocuments = async () => {
 
   return categoryMap;
 }
-
-//now let's go to product context to use this data 
-
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     if (!userAuth) return;
