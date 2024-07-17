@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from '../button/button.component';
+import { useNavigate } from 'react-router-dom';
 const defaultFormFields = {
     email: '',
     password: ''
@@ -13,7 +14,7 @@ const defaultFormFields = {
 const SignInForm = () => {
     const[formFields, setFormFields] = useState(defaultFormFields);;
     const {email, password} = formFields;
-
+    const navigate = useNavigate();
     const resetFormFields = () => setFormFields(defaultFormFields);
 
     const handleChange = (event) => {
@@ -26,7 +27,7 @@ const SignInForm = () => {
         try{    
             const {user} = await signInUserWithEmailAndPassword(email,password);
             if(user){
-                alert('successfully signed in');
+                navigate("/home");
             }
             resetFormFields();
         }catch(error){
@@ -43,7 +44,9 @@ const SignInForm = () => {
     const signInWithGoogle = async () => {
         const {user}  = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
-        // await createUserDocumentFromAuth(user);
+        if(user){
+            navigate("/home");
+        }
     } 
 
     return(

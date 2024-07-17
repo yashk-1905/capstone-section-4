@@ -16,7 +16,7 @@ const Navigation = () => {
     return(
       <>
         <div className="navigation">
-          <Link className="logo-container" to='/'>
+          <Link className="logo-container" to='/home'>
             <CrwnLogo className="logo"></CrwnLogo>
           </Link>
           <div className="nav-links-container">
@@ -29,10 +29,12 @@ const Navigation = () => {
                   className='nav-link' 
                   onClick={signOutUser}
                   >
+                <Link className='nav-link' to = '/'>
                   SIGN OUT
+                </Link>
                 </span>
               ) :(  
-                <Link className='nav-link' to = '/auth'>
+                <Link className='nav-link' to = '/'>
                   SIGN IN
                 </Link>
               )
