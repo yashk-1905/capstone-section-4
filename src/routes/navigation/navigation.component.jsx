@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {ReactComponent as CrwnLogo} from '../../assets/crown.svg'
 import './navigation-scss/navigation.style.css'
 
@@ -9,14 +9,14 @@ import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import { CartDropdownContext } from '../../contexts/cart-dropdown.context';
 const Navigation = () => {
-    const {currentUser} = useContext(SignInContext);
+    const {currentUser, showNav} = useContext(SignInContext);
     console.log(currentUser);
     const {isCartOpen} = useContext(CartDropdownContext);
 
     return(
       <>
         {/* <div className="navigation"> */}
-        <div className={`${currentUser?'navigation':'navigation-hidden'}`}>
+        <div className={`${showNav ?'navigation':'navigation-hidden'}`}>
           <Link className="logo-container" to='/home'>
             <CrwnLogo className="logo"></CrwnLogo>
           </Link>

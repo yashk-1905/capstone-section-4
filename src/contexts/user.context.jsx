@@ -9,6 +9,8 @@ import { CreateAction } from "../utils/reducer/reducer.utils";
 export const SignInContext = createContext({
   currentUser: null,
   setCurrentUser: () => null,
+  showNav: false,
+  setShowNav: () => {}
 });
 const USER_ACTION_TYPES = {
   SET_CURRENT_USER: 'SET_CURRENT_USER'
@@ -35,6 +37,7 @@ const INITIAL_STATE = {
 export const SignInProvider = ({ children }) => {
   const [{currentUser}, dispatch] = useReducer(userReducer, INITIAL_STATE); 
   console.log(currentUser);
+  const [showNav, setShowNav] = useState(false);
 
   const setCurrentUser = (user) => {
     dispatch(
@@ -43,7 +46,7 @@ export const SignInProvider = ({ children }) => {
     )
   };
 
-  const value = { currentUser, setCurrentUser };
+  const value = { currentUser, setCurrentUser, showNav, setShowNav };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListner((user) => {

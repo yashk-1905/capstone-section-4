@@ -6,12 +6,14 @@ import { signInWithGooglePopup, createUserDocumentFromAuth, signInUserWithEmailA
 import FormInput from "../form-input/form-input.component";
 import Button from '../button/button.component';
 import { useNavigate } from 'react-router-dom';
+import { SignInContext } from '../../contexts/user.context';
 const defaultFormFields = {
     email: '',
     password: ''
 }
 
 const SignInForm = () => {
+    const {setShowNav} = useContext(SignInContext);
     const[formFields, setFormFields] = useState(defaultFormFields);;
     const {email, password} = formFields;
     const navigate = useNavigate();
@@ -27,6 +29,7 @@ const SignInForm = () => {
         try{    
             const {user} = await signInUserWithEmailAndPassword(email,password);
             if(user){
+                setShowNav(true);
                 navigate("/home");
             }
             resetFormFields();
