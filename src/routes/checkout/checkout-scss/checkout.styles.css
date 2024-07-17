@@ -24,4 +24,12 @@
   margin-top: 30px;
   margin-left: auto;
   font-size: 36px;
+}
+.checkout-container .total-zero {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 40px;
+  color: #dc143c;
+  font-style: italic;
+  text-transform: uppercase;
 }/*# sourceMappingURL=checkout.styles.css.map */

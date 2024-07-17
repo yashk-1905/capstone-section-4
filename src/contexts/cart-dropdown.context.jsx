@@ -102,14 +102,6 @@ export const CartDropdownProvider = ({ children }) => {
 
     // dispatch
     dispatch(
-    /**
-        type: USER_ACTION_TYPES.SET_CART_ITEMS,
-        payload: {
-        cartItems: newCartItems,
-        cartTotal: newCartTotal,
-        cartCount: newCartCount,
-        },
-     */   
       CreateAction(USER_ACTION_TYPES.SET_CART_ITEMS, {
         cartItems: newCartItems,
         cartTotal: newCartTotal,
@@ -136,7 +128,6 @@ export const CartDropdownProvider = ({ children }) => {
   const value = {
     isCartOpen,
     setIsCartOpen,
-    // setIsCartOpen: () => {},
     addItemToCart,
     cartItems,
     cartCount,

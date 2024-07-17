@@ -48,6 +48,7 @@ const SignInForm = () => {
         const {user}  = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
         if(user){
+            setShowNav(true);
             navigate("/home");
         }
     } 

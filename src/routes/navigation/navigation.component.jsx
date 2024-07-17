@@ -9,9 +9,13 @@ import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import { CartDropdownContext } from '../../contexts/cart-dropdown.context';
 const Navigation = () => {
-    const {currentUser, showNav} = useContext(SignInContext);
+    const {currentUser, setShowNav, showNav} = useContext(SignInContext);
     console.log(currentUser);
     const {isCartOpen} = useContext(CartDropdownContext);
+    const signUserOut = () =>  {
+      signOutUser();
+      setShowNav(false);
+    }
 
     return(
       <>
@@ -28,7 +32,7 @@ const Navigation = () => {
               currentUser ? (
                 <span 
                   className='nav-link' 
-                  onClick={signOutUser}
+                  onClick={signUserOut}
                   >
                 <Link className='nav-link' to = '/'>
                   SIGN OUT
