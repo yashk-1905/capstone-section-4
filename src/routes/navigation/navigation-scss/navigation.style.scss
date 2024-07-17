@@ -5,7 +5,9 @@
     justify-content: space-between;
     margin-bottom: 25px;
     align-items: center;
-  
+    &-hidden{
+      display: none;
+    }
     .logo-container {
     //   height: 100%;
       width: 70px;

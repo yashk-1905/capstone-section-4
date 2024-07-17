@@ -15,7 +15,8 @@ const Navigation = () => {
 
     return(
       <>
-        <div className="navigation">
+        {/* <div className="navigation"> */}
+        <div className={`${currentUser?'navigation':'navigation-hidden'}`}>
           <Link className="logo-container" to='/home'>
             <CrwnLogo className="logo"></CrwnLogo>
           </Link>

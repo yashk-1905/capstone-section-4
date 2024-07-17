@@ -6,6 +6,9 @@
   margin-bottom: 25px;
   align-items: center;
 }
+.navigation-hidden {
+  display: none;
+}
 .navigation .logo-container {
   width: 70px;
 }
